@@ -36,7 +36,7 @@ const Form = () => {
       setInvalidMessage(true)
     }
     
-    if(formData.name.length>0&&formData.message.length>0&&formData.contact.length>0&&formData.email.length&&invalid){
+    if(formData.name.length>0&&formData.message.length>0&&formData.contact.length>0&&formData.email.length&&!invalid){
         setCompleted(true)
     }
 	}
