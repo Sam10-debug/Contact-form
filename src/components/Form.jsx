@@ -4,7 +4,10 @@ import { FormContext } from '../FormContext/FormContext'
 
 const Form = () => {
 	const [invalid,setInvalid]=useState(false)
-	const {formData,setFormData}=useContext(FormContext)
+  const [invalidName,setInvalidName]=useState(false)
+  const [invalidMessage,setInvalidMessage]=useState(false)
+  const [invalidContact,setInvalidContact]=useState(false)
+	const {formData,setFormData,setCompleted,completed}=useContext(FormContext)
 	const handleData=(e)=>{
 		const {name,value}=e.target
 		setFormData(prev=>{
@@ -13,21 +16,29 @@ const Form = () => {
 				[name]:value
 			}
 		})
-		// console.log(formData)
 	}
 	const handleSubmit=(e)=>{
 		e.preventDefault()
-		// console.log("submitted")
+
 		if (!formData.email.includes("@")){
 			setInvalid(true)
-			// console.log(true)
+		
 		}else{
-			// console.log(false)
 			setInvalid(false)
 		}
-		if (formData.name===""||formData.email===""||formData.contact===""||formData.message===""){
-			console.log("nah")
+		if (formData.name===""){
+      setInvalidName(true)
 		}
+     if(formData.contact===""){
+      setInvalidContact(true)
+    }
+     if(formData.message===""){
+      setInvalidMessage(true)
+    }
+    
+    if(formData.name.length>0&&formData.message.length>0&&formData.contact.length>0&&formData.email.length&&!invalid){
+        setCompleted(true)
+    }
 	}
 
   return (
@@ -40,23 +51,29 @@ const Form = () => {
             <div className="">
               <div className="input-section">
                 <div className="">
-                  <label htmlFor="name">Full Name *</label>
-                  <input  type="text" onChange={handleData} placeholder="Enter your full name" value={formData.name} name="name" />
+                  <label htmlFor="name">Full Name * {invalidName&&"please enter your name"}</label>
+                  <input style={{
+                    borderColor: invalidName?"red":"black"
+                  }}  type="text" onChange={handleData} placeholder="Enter your full name" value={formData.name} name="name" />
                 </div>
                 <div className="">
-                  <label htmlFor="email">Email *</label>
-                  <input style={{
+                  <label htmlFor="email">Email * {invalid&&"Enter a valid email address"}</label>
+                  <input className='my-4' style={{
 					  borderColor: invalid?"red":"black"
 				  }} type="email" onChange={handleData} id="email" name="email" value={formData.email} placeholder="Enter your email" />
                 </div>
                 <div className="">
-                  <label htmlFor="contact">Contact Number *</label>
-                  <input type="tel" id="contact" name="contact" value={formData.contact} placeholder="Enter your number" onChange={handleData} />
+                  <label htmlFor="contact">Contact Number * {invalidContact&&"please enter your contact"}</label>
+                  <input className='mb-4' style={{
+					  borderColor: invalidContact?"red":"black"
+				  }} type="tel" id="contact" name="contact" value={formData.contact} placeholder="Enter your number" onChange={handleData} />
                 </div>
               </div>
               <div className="textarea-section">
-                <label htmlFor="message">Message *</label>
-                <textarea name="message"  value={formData.message} id="message" cols="30" rows="10" onChange={handleData}></textarea>
+                <label htmlFor="message">Message * {invalidMessage&&"Leave a message"}</label>
+                <textarea style={{
+					  borderColor: invalidMessage?"red":"black"
+				  }} name="message"  value={formData.message} id="message" cols="30" rows="10" onChange={handleData}></textarea>
               </div>
             </div>
             <div className="btn">
@@ -69,7 +86,4 @@ const Form = () => {
 
 export default Form
 
-//add a functionality whereby if the use doesnt fill in the inputs and press submit 
-//he is notified of the respective input he is yet to fill 
-// and maybe you could add a small message there indicating what to do
-//finaly let the completed component display when the user has filled al he is supposed to fill appopriately 
+//finaly let the completed component display when the user has filled all he is supposed to fill appopriately 

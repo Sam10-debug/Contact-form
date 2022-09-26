@@ -1,8 +1,10 @@
 import { useState } from "react";
+import Completed from "./components/Completed";
 import Form from "./components/Form";
 import { FormContext } from "./FormContext/FormContext";
 
 function App() {
+  const [completed,setCompleted]=useState(false)
   const [formData,setFormData]=useState({
     name:"",
     email:"",
@@ -10,9 +12,10 @@ function App() {
     message:""
   })
   return (
-    <FormContext.Provider value={{formData,setFormData}}>
+    <FormContext.Provider value={{formData,setFormData,completed,setCompleted}}>
         <div className="App w-full h-screen flex justify-center py-8 bg-slate-300">
-        <Form />
+        {!completed&&<Form />}
+        {completed&&<Completed />}
       </div>
     </FormContext.Provider>
   );
