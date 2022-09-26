@@ -80,5 +80,10 @@ label{
 	.input-section>div:last-of-type{
 		margin-bottom: 14px;
 	}
-	
+	label{
+		margin-block: 2px;
+	}
+	form{
+		padding: 6px;
+	}
 }
