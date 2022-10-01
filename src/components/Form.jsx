@@ -17,8 +17,10 @@ const Form = () => {
 			}
 		})
 	}
+
 	const handleSubmit=(e)=>{
 		e.preventDefault()
+    
 
 		if (!formData.email.includes("@")){
 			setInvalid(true)
@@ -77,7 +79,7 @@ const Form = () => {
               </div>
             </div>
             <div className="btn">
-            <button className="" onClick={handleSubmit}>SUBMIT</button>
+            <button className="" disabled={formData.name===""||formData.email===""||formData.message===""||formData.contact===""?true : false} onClick={handleSubmit}>SUBMIT</button>
             </div>
           </form>
       </section>
